@@ -48,7 +48,7 @@ docker run -d -p 9527:9527 -v github-webhook-rust:/etc/github-webhook-rust ketik
 
 #### TLS 证书
 
-此项目默认提供了一组自签名证书作为示例（不安全）使用，位于数据卷下 `certificates` 文件夹内。
+默认提供了一组自签名证书作为示例（不安全）使用，位于数据卷下 `certificates` 文件夹内。
 
 建议使用 [`mkcert`](https://github.com/FiloSottile/mkcert/) 工具建立可信证书。若要启用本地CA认证，请执行：
 
@@ -61,3 +61,17 @@ mkcert -install
 ```shell
 mkcert -key-file key.pem -cert-file cert.pem 127.0.0.1 localhost
 ```
+
+#### 配置推送频道
+
+默认提供了一个 `Telegram Bot` 的模版频道目录及文件结构示例，位于数据卷下 `channels` 文件夹内。
+
+##### 属性占位符
+
+格式为：`${...}`
+占位符可能取自以下内容中：
+- 频道配置文件 `config.json` 中的 `properties`
+- 事件消息体（展平后）中的任意属性
+- `${__message__}` 表示解析后的模版消息内容，此项仅在 `config.json` 中的 `request` 的 `body` 中有效
+
+优先级：`${__message__}` > 事件消息体属性 > 频道配置文件属性
