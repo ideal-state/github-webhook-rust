@@ -1,0 +1,20 @@
+{
+  "name": "telegram",
+  "properties": {
+    "token": "8144656497:AAFAncfEnFR-At35wAVCPQptNrXY7VNeSro"
+  },
+  "url": "https://api.telegram.org/bot${token}/sendMessage",
+  "mode": "markdown",
+  "replacements": {},
+  "request": {
+    "header": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "chat_id": "@istateteam",
+      "message_thread_id": 46,
+      "parse_mode": "MarkdownV2",
+      "text": "${__message__}"
+    }
+  }
+}

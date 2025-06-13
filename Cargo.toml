@@ -1,0 +1,37 @@
+[package]
+name = "github-webhook-rust"
+version = "0.1.1"
+edition = "2024"
+authors = [
+    "ketikai <ketikai@idealstate.team>"
+]
+
+[dependencies]
+constant_time_eq = "0.4.2"
+flatten-json-object = "0.6.1"
+futures = "0.3.31"
+log = "0.4.27"
+log4rs = "1.3.0"
+rust-embed = "8.7.2"
+serde_json = "1.0.140"
+tokio = "1.45.1"
+
+[dependencies.clap]
+version = "4.5.40"
+features = ["derive"]
+
+[dependencies.actix-web]
+version = "4.11.0"
+features = ["openssl"]
+
+[dependencies.reqwest]
+version = "0.12.20"
+features = ["json"]
+
+[dependencies.serde]
+version = "1.0.219"
+features = ["derive"]
+
+[dependencies.openssl]
+version = "0.10.73"
+features = ["vendored"]
