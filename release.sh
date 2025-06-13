@@ -15,9 +15,11 @@ fi
 # docker system prune -f
 
 docker build -t ketikai/github-webhook-rust:$1 .
+
 docker push ketikai/github-webhook-rust:$1
 
 docker tag ketikai/github-webhook-rust:$1 ketikai/github-webhook-rust:latest
+
 docker push ketikai/github-webhook-rust:latest
 
 echo "Successfully released version '$1'"
