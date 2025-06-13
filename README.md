@@ -26,9 +26,29 @@ cargo build --release
 
 ### ☑️ 如何使用
 
-### TLS 证书
+#### 运行容器
 
-此项目可能提供了自签名证书作为示例（不安全）。
+```shell
+# 1. 创建数据卷
+docker volume create --name github-webhook-rust
+# 2. 运行容器
+docker run -d -p 9527:9527 -v github-webhook-rust:/etc/github-webhook-rust ketikai/github-webhook-rust:latest
+```
+
+#### 环境变量
+
+- `GWR_HOSTNAME`: 主机名，默认为 `0.0.0.0`
+- `GWR_PORT`: 服务端口，默认为 `9527`
+- `GWR_TLS`: 是否启用 TLS，默认为 `false`
+- `GWR_WORKERS`: 工作线程数，默认为 `0`，即 CPU 核心数
+
+#### 消息签名密钥
+
+于数据卷下 `secret` 文件内填写。
+
+#### TLS 证书
+
+此项目默认提供了一组自签名证书作为示例（不安全）使用，位于数据卷下 `certificates` 文件夹内。
 
 建议使用 [`mkcert`](https://github.com/FiloSottile/mkcert/) 工具建立可信证书。若要启用本地CA认证，请执行：
 
