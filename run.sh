@@ -20,4 +20,8 @@ if [ -n "$GWR_WORKERS" ]; then
     args+=("--workers" "$GWR_WORKERS")
 fi
 
+if [ -n "$GWR_MAXIMUM_PAYLOAD" ]; then
+    args+=("--maximum-payload" "$GWR_MAXIMUM_PAYLOAD")
+fi
+
 exec "${args[@]}"

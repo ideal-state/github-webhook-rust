@@ -3,10 +3,9 @@ use std::{collections::HashMap, fs, io::BufReader, path::Path};
 use futures::StreamExt;
 
 use crate::api::configs;
+use crate::util::args;
 use crate::util::secerts;
 use crate::util::values;
-
-const PAYLOAD_MAX_SIZE: usize = 16384;
 
 fn resolve_template_ex(
     template: &str,
@@ -155,6 +154,7 @@ impl configs::ChannelManager {
 
     pub async fn push(
         &self,
+        maximum_payload: usize,
         headers: &actix_web::http::header::HeaderMap,
         mut payload: actix_web::web::Payload,
     ) -> actix_web::HttpResponse {
@@ -165,9 +165,9 @@ impl configs::ChannelManager {
         while let Some(chunk) = payload.next().await {
             let chunk = chunk.unwrap();
             let size = body.len() + chunk.len();
-            if (size) > PAYLOAD_MAX_SIZE {
+            if (size) > maximum_payload {
                 return actix_web::HttpResponse::PayloadTooLarge()
-                    .body(format!("Payload size is ({} > {})", size, PAYLOAD_MAX_SIZE));
+                    .body(format!("Payload size is ({} > {})", size, maximum_payload));
             }
             body.extend_from_slice(&chunk);
         }

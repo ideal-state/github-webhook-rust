@@ -19,6 +19,10 @@ pub struct MainArgs {
     /// The workers of the web server
     #[arg(short = None, long, default_value_t = 0)]
     pub workers: u8,
+    
+    /// The maximum payload size (in bytes) on the web server
+    #[arg(short = None, long = "maximum-payload", default_value_t = 32768)]
+    pub maximum_payload: usize,
 }
 
 pub fn parse() -> MainArgs {

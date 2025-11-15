@@ -7,6 +7,8 @@ use std::{env, sync::Arc};
 use api::configs;
 use util::{args, assets, logs, tls};
 
+static mut MAXIMUM_PAYLOAD: usize = 32768;
+
 /// Push GitHub webhook event
 #[actix_web::post("/push")]
 async fn push(
@@ -20,7 +22,10 @@ async fn push(
         None
     };
     if let Some(channel_manager) = channel_manager {
-        return channel_manager.push(request.headers(), payload).await;
+        let maximum_payload = unsafe {
+            MAXIMUM_PAYLOAD
+        };
+        return channel_manager.push(maximum_payload, request.headers(), payload).await;
     }
     actix_web::HttpResponse::RequestTimeout().finish()
 }
@@ -35,6 +40,9 @@ async fn main() -> std::io::Result<()> {
     logs::init_log("./logs/log4rs.yaml");
 
     let args = args::parse();
+    unsafe {
+        MAXIMUM_PAYLOAD = args.maximum_payload;
+    }
 
     let addr = format!("{}:{}", args.hostname, args.port);
     let mut server;

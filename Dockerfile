@@ -4,9 +4,14 @@ WORKDIR /code
 
 RUN apk upgrade --update-cache --available && apk add pkgconfig make musl-dev perl openssl-dev openssl-libs-static
 
-COPY . .
+COPY Cargo.toml .
+COPY Cargo.lock .
+COPY src/ ./src/
+COPY resources/ ./resources/
 
 RUN cargo fetch && cargo build --release
+
+COPY run.sh .
 
 FROM alpine:3.22
 
@@ -23,6 +28,7 @@ ENV GWR_HOSTNAME=0.0.0.0
 ENV GWR_PORT=9527
 ENV GWR_TLS=false
 ENV GWR_WORKERS=0
+ENV GWR_MAXIMUM_PAYLOAD=32768
 
 EXPOSE $GWR_PORT
 
