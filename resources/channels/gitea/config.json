@@ -1,0 +1,48 @@
+{
+  "enabled": false,
+  "name": "gitea",
+  "secret": "",
+  "mappings": {
+    "X-Hub-Signature-256": "X-Hub-Signature-256",
+    "X-GitHub-Event": "X-GitHub-Event"
+  },
+  "properties": {
+    "token": "8144656497:AAFAncfEnFR-At35wAVCPQptNrXY7VNeSro"
+  },
+  "replacements": {
+    "_": "\\_",
+    "*": "\\*",
+    "[": "\\[",
+    "]": "\\]",
+    "(": "\\(",
+    ")": "\\)",
+    "~": "\\~",
+    "`": "\\`",
+    ">": "\\>",
+    "#": "\\#",
+    "+": "\\+",
+    "-": "\\-",
+    "=": "\\=",
+    "|": "\\|",
+    "{": "\\{",
+    "}": "\\}",
+    ".": "\\.",
+    "!": "\\!"
+  },
+  "requests": {
+    "url": "https://api.telegram.org/bot${token}/sendMessage",
+    "header": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "chat_id": "@istateteam",
+      "message_thread_id": 46,
+      "parse_mode": "MarkdownV2",
+      "protect_content": true,
+      "link_preview_options": {
+        "show_above_text": true
+      },
+      "text": "${__message__}"
+    }
+  }
+}
